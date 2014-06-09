@@ -27,7 +27,11 @@ module RailsAdmin
 
           # Reader for validation errors of the bound object
           def errors
-            bindings[:object].errors[name]
+            bindings[:object].errors.each do |attr, error|
+              return ["has errors"] if (attr =~ /#{name.to_s}/)
+            end
+
+            return []
           end
         end
       end
